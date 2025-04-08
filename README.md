@@ -1,12 +1,34 @@
-# React + Vite
+# Trade TP/SL Calculator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A personal trading tool I built to calculate Take Profit (TP) and Stop Loss (SL) levels efficiently. While I created this for my own trading needs, it's open for anyone who might find it useful.
 
-Currently, two official plugins are available:
+## 🌟 Key Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Calculation Engine**: Computes TP and SL levels based on entry price and risk tolerance
+- **Risk Management**: Helps maintain position sizing and risk-to-reward ratios
+- **Multiple Trading Pairs**: Works with stocks, forex, and crypto
+- **Simple Interface**: Clean design for quick calculations
 
-## Expanding the ESLint configuration
+## 💡 Purpose
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+I made this calculator to:
+- Remove guesswork from my trading decisions
+- Maintain consistent risk parameters
+- Save time on manual calculations
+- Keep my trading disciplined
+
+## 🚀 Features
+
+- Calculate position size based on account balance and risk percentage
+- Support for different timeframes
+- Customizable risk-to-reward ratios
+- Export calculations for record keeping
+
+## 📊 Benefits
+
+- Makes trade planning more systematic
+- Reduces emotional decision making
+- Helps maintain consistent risk management
+- Speeds up pre-trade calculations
+
+Feel free to use this calculator if you're looking for a straightforward tool to handle your trading calculations.
