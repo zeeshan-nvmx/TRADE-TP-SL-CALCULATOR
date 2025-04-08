@@ -1,4 +1,4 @@
-import BinanceFuturesCalculator from './BinanceFuturesCalculatorOld'
+import BinanceFuturesCalculator from "./BinanceFuturesCalculator"
 
 function App() {
 

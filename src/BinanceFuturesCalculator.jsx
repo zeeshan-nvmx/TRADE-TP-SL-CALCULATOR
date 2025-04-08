@@ -919,7 +919,7 @@ const BinanceFuturesCalculator = () => {
       </div>
 
       <div className='mt-4 text-center text-neutral-500 dark:text-neutral-400 text-xs'>
-        <p>© {new Date().getFullYear()} Zeeshan's Futures Trade Calculator</p>
+        <p>© {new Date().getFullYear()} Zeeshan's trading Calculator</p>
       </div>
     </div>
   )
