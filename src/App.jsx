@@ -1,9 +1,9 @@
-import BinanceFuturesCalculator from "./BinanceFuturesCalculator"
+import BinanceFuturesCalculatorNew from "./BinanceFuturesCalculatorNew"
 
 function App() {
 
   return (
-    <BinanceFuturesCalculator />
+    <BinanceFuturesCalculatorNew />
   )
 }
 
