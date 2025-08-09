@@ -200,7 +200,7 @@ Pre-configured values for quick input:
 - Price/percent synchronization maintains consistency
 
 **Binance Futures API Integration:**
-- Auto-fetches ALL Binance Futures contract types every 5 seconds
+- Auto-fetches ALL Binance Futures contract types every 3 seconds
 - Includes PERPETUAL, CURRENT_QUARTER, NEXT_QUARTER, and delivery-date contracts
 - Symbol selector with search functionality and contract type indicators
 - Real-time price updates with connection status indicators (🟢🟡🔴)

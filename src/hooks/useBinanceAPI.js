@@ -27,7 +27,7 @@ export const useBinanceSymbols = () => {
   return { symbols, loading, error }
 }
 
-export const usePriceUpdater = (symbol, intervalMs = 5000) => {
+export const usePriceUpdater = (symbol, intervalMs = 3000) => {
   const [price, setPrice] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)

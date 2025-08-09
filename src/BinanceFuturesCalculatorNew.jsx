@@ -9,7 +9,7 @@ import ResultsPanel from './components/ResultsPanel'
 
 const BinanceFuturesCalculatorNew = () => {
   const calculatorState = useCalculator()
-  const { price: currentPrice, loading: priceLoading, status: priceStatus } = usePriceUpdater(calculatorState.symbol, 1000)
+  const { price: currentPrice, loading: priceLoading, status: priceStatus } = usePriceUpdater(calculatorState.symbol, 3000)
 
   // Update entry price when we get a new price from the API
   useEffect(() => {
