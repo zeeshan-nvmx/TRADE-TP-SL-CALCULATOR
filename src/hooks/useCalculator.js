@@ -15,6 +15,7 @@ export const useCalculator = () => {
   const [tradeDirection, setTradeDirection] = useState('LONG')
   const [entryPriceInput, setEntryPriceInput] = useState('84882')
   const [entryPrice, setEntryPrice] = useState(84882)
+  const [autoPriceUpdate, setAutoPriceUpdate] = useState(true)
 
   const [takeProfits, setTakeProfits] = useState(DEFAULT_TAKE_PROFITS)
 
@@ -664,6 +665,7 @@ export const useCalculator = () => {
     tradeDirection,
     entryPriceInput,
     entryPrice,
+    autoPriceUpdate,
     takeProfits,
     useStopLoss,
     stopLossPriceInput,
@@ -717,6 +719,7 @@ export const useCalculator = () => {
     setCalculationMode,
     setUseStopLoss,
     setUseTrailingStop,
+    setAutoPriceUpdate,
     handleAccountSizeChange,
     handleLeverageChange,
     handleEntryPriceChange,

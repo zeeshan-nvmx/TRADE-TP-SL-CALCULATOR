@@ -11,12 +11,12 @@ const BinanceFuturesCalculatorNew = () => {
   const calculatorState = useCalculator()
   const { price: currentPrice, loading: priceLoading, status: priceStatus } = usePriceUpdater(calculatorState.symbol, 3000)
 
-  // Update entry price when we get a new price from the API
+  // Update entry price when we get a new price from the API (only if auto mode is enabled)
   useEffect(() => {
-    if (currentPrice && currentPrice !== calculatorState.entryPrice) {
+    if (calculatorState.autoPriceUpdate && currentPrice && currentPrice !== calculatorState.entryPrice) {
       calculatorState.handleEntryPriceChange(currentPrice.toString())
     }
-  }, [currentPrice, calculatorState])
+  }, [currentPrice, calculatorState.autoPriceUpdate, calculatorState.entryPrice, calculatorState.handleEntryPriceChange])
 
   return (
     <div className='max-w-4xl mx-auto p-4 dark:bg-black bg-white text-sm font-sans'>
@@ -44,6 +44,8 @@ const BinanceFuturesCalculatorNew = () => {
             handleEntryPriceChange={calculatorState.handleEntryPriceChange}
             isLoadingPrice={priceLoading}
             priceUpdateStatus={priceStatus}
+            autoPriceUpdate={calculatorState.autoPriceUpdate}
+            setAutoPriceUpdate={calculatorState.setAutoPriceUpdate}
           />
 
           {/* Take Profit Targets */}

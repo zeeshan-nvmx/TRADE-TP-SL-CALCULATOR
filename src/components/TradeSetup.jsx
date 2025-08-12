@@ -21,7 +21,9 @@ const TradeSetup = ({
   entryPriceInput,
   handleEntryPriceChange,
   isLoadingPrice,
-  priceUpdateStatus
+  priceUpdateStatus,
+  autoPriceUpdate,
+  setAutoPriceUpdate
 }) => {
   return (
     <div className='space-y-3 p-4 border border-neutral-200 dark:border-neutral-700 rounded-lg'>
@@ -151,10 +153,22 @@ const TradeSetup = ({
         </div>
       </div>
       <div>
-        <label className='text-xs font-medium text-neutral-500 dark:text-neutral-400 mb-1 block'>
-          Entry Price
-          {isLoadingPrice && <span className='text-blue-500 ml-1'>(updating...)</span>}
-        </label>
+        <div className='flex justify-between items-center mb-1'>
+          <label className='text-xs font-medium text-neutral-500 dark:text-neutral-400'>
+            Entry Price
+            {isLoadingPrice && <span className='text-blue-500 ml-1'>(updating...)</span>}
+          </label>
+          <button
+            onClick={() => setAutoPriceUpdate(!autoPriceUpdate)}
+            className={`text-xs px-2 py-1 rounded transition-colors ${
+              autoPriceUpdate
+                ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
+                : 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-400'
+            }`}
+            title={autoPriceUpdate ? 'Auto price updates enabled' : 'Manual price mode - auto updates disabled'}>
+            {autoPriceUpdate ? '🔄 Auto' : '✋ Manual'}
+          </button>
+        </div>
         <input
           type='text'
           inputMode='decimal'
