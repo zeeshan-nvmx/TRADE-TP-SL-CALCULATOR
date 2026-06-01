@@ -25,7 +25,10 @@ const StopLossConfig = ({
   trailingStopSimulationPriceInput,
   handleTrailingStopSimulationPriceChange,
   trailingStopTriggerPrice,
-  trailingStopSimulationPrice
+  trailingStopSimulationPrice,
+  slAutoPriceUpdate,
+  handleSLAutoPriceToggle,
+  isLoadingPrice
 }) => {
   return (
     <div className='space-y-3 p-4 border border-neutral-200 dark:border-neutral-700 rounded-lg'>
@@ -45,7 +48,22 @@ const StopLossConfig = ({
       {useStopLoss ? (
         <div className='space-y-3'>
           <div className='grid grid-cols-3 gap-2 items-center'>
-            <label className='text-xs text-neutral-500 dark:text-neutral-400 col-span-1'>Price</label>
+            <div className='flex justify-between items-center mb-1 col-span-1'>
+              <label className='text-xs font-medium text-neutral-500 dark:text-neutral-400'>
+                Price
+                {isLoadingPrice && <span className='text-blue-500 ml-1'>(updating...)</span>}
+              </label>
+              <button
+                onClick={() => handleSLAutoPriceToggle(!slAutoPriceUpdate)}
+                className={`text-xs px-2 py-1 rounded transition-colors ${
+                  slAutoPriceUpdate
+                    ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
+                    : 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-400'
+                }`}
+                title={slAutoPriceUpdate ? 'Auto price updates enabled' : 'Manual price mode - auto updates disabled'}>
+                {slAutoPriceUpdate ? '🔄 Auto' : '✋ Manual'}
+              </button>
+            </div>
             <div className='flex col-span-2 relative'>
               <input
                 type='text'
