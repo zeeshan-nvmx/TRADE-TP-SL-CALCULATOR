@@ -441,7 +441,7 @@ export const useCalculator = () => {
     // Fees
     const fees = EXCHANGE_FEES[exchange]
     const entryFeeRate = fees.taker
-    const tpFeeRate = fees.maker
+    const tpFeeRate = fees.taker
     const slFeeRate = fees.taker
     const trailingSlFeeRate = fees.taker
     const calcEntryFee = calculatedPositionSize * entryFeeRate
