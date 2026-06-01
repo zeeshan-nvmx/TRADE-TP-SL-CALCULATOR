@@ -42,8 +42,8 @@ export const useCalculator = () => {
 
   const [lastUpdated, setLastUpdated] = useState({ tp: Array(3).fill('price'), sl: 'price' })
   const [calculationMode, setCalculationMode] = useState('fixed')
-  const [positionSizeUSDTInput, setPositionSizeUSDTInput] = useState('100')
-  const [positionSizeUSDT, setPositionSizeUSDT] = useState(100)
+  const [positionSizeUSDTInput, setPositionSizeUSDTInput] = useState('50')
+  const [positionSizeUSDT, setPositionSizeUSDT] = useState(50)
   const [riskPercentInput, setRiskPercentInput] = useState('20')
   const [riskPercent, setRiskPercent] = useState(20)
 
