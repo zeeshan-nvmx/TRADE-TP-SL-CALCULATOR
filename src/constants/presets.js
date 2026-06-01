@@ -1,7 +1,7 @@
 // Preset values for quick input selection
 
 export const EXCHANGE_FEES = {
-  binance: { maker: 0.0002, taker: 0.0004, name: 'Binance' },
+  binance: { maker: 0.0002, taker: 0.0005, name: 'Binance' },
   bybit: { maker: 0.0001, taker: 0.0006, name: 'Bybit' },
 }
 

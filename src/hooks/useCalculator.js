@@ -13,8 +13,8 @@ export const useCalculator = () => {
   const [exceedsAccount, setExceedsAccount] = useState(false)
   const [requiredAccountSize, setRequiredAccountSize] = useState(0)
   const [tradeDirection, setTradeDirection] = useState('LONG')
-  const [entryPriceInput, setEntryPriceInput] = useState('84882')
-  const [entryPrice, setEntryPrice] = useState(84882)
+  const [entryPriceInput, setEntryPriceInput] = useState('')
+  const [entryPrice, setEntryPrice] = useState(0)
   const [autoPriceUpdate, setAutoPriceUpdate] = useState(false)
   const [tpAutoPriceUpdate, setTPAutoPriceUpdate] = useState([true, false, false])
   const [slAutoPriceUpdate, setSLAutoPriceUpdate] = useState(false)
@@ -23,10 +23,10 @@ export const useCalculator = () => {
 
   // --- Stop Loss States ---
   const [useStopLoss, setUseStopLoss] = useState(true)
-  const [stopLossPriceInput, setStopLossPriceInput] = useState('84551')
-  const [stopLossPrice, setStopLossPrice] = useState(84551)
-  const [stopLossPercentInput, setStopLossPercentInput] = useState('0.39')
-  const [stopLossPercent, setStopLossPercent] = useState(0.39)
+  const [stopLossPriceInput, setStopLossPriceInput] = useState('')
+  const [stopLossPrice, setStopLossPrice] = useState(null)
+  const [stopLossPercentInput, setStopLossPercentInput] = useState('')
+  const [stopLossPercent, setStopLossPercent] = useState(0)
 
   // --- Trailing Stop Loss States ---
   const [useTrailingStop, setUseTrailingStop] = useState(false)
