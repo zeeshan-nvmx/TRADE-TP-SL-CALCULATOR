@@ -1,5 +1,6 @@
 import React from 'react'
 import { EXCHANGE_FEES } from '../constants/presets'
+import PositionSizing from './PositionSizing'
 import { formatNumber, formatHighPrecision, formatPrice, safeDivide } from '../utils/calculations'
 
 const ResultsPanel = ({
@@ -17,6 +18,12 @@ const ResultsPanel = ({
   exceedsAccount,
   riskAmountDisplay,
   positionSizeUSDT,
+  positionSizeUSDTInput,
+  handlePositionSizeChange,
+  setCalculationMode,
+  riskPercentInput,
+  riskPercent,
+  handleRiskPercentChange,
   leverage,
   slDistDisplay,
   riskRewardRatio,
@@ -137,31 +144,18 @@ const ResultsPanel = ({
         </div>
       </div>
 
-      {/* Liquidation Analysis */}
-      <div className='p-4 border border-neutral-200 dark:border-neutral-700 rounded-lg space-y-3'>
-        <h2 className='text-base font-medium text-neutral-900 dark:text-neutral-100 mb-2'>Liquidation Analysis</h2>
-        <div className='grid grid-cols-2 gap-3'>
-          <div>
-            <label className='text-xs font-medium text-neutral-500 dark:text-neutral-400 mb-1 block'>Liquidation Price (Est.)</label>
-            <div className='h-9 px-3 py-2 text-sm font-medium rounded-md border border-neutral-200 dark:border-neutral-800 bg-neutral-100 dark:bg-neutral-800/50 text-red-500 dark:text-red-400'>
-              {formatPrice(liquidationPrice)}
-            </div>
-            <p className='text-xs text-neutral-500 dark:text-neutral-400 mt-1'>Based on margin & MMR</p>
-          </div>
-          <div>
-            <label className='text-xs font-medium text-neutral-500 dark:text-neutral-400 mb-1 block'>Real Liq. Price (Cross)</label>
-            <div className='h-9 px-3 py-2 text-sm font-medium rounded-md border border-neutral-200 dark:border-neutral-800 bg-neutral-100 dark:bg-neutral-800/50 text-red-500 dark:text-red-400'>
-              {formatPrice(realLiquidationPrice)}
-            </div>
-            <p className='text-xs text-neutral-500 dark:text-neutral-400 mt-1'>Includes account buffer</p>
-          </div>
-        </div>
-        <div className='p-2 border border-blue-200 dark:border-blue-800 rounded-md bg-blue-50 dark:bg-blue-900/20'>
-          <p className='text-xs text-blue-700 dark:text-blue-300'>
-            <strong>Liquidation buffer:</strong> {formatNumber(Math.max(0, accountSize - effectiveMargin))} USDT extra funds provide additional protection.
-          </p>
-        </div>
-      </div>
+      {/* Position Sizing */}
+      <PositionSizing
+        calculationMode={calculationMode}
+        setCalculationMode={setCalculationMode}
+        useStopLoss={useStopLoss}
+        positionSizeUSDTInput={positionSizeUSDTInput}
+        positionSizeUSDT={positionSizeUSDT}
+        handlePositionSizeChange={handlePositionSizeChange}
+        riskPercentInput={riskPercentInput}
+        riskPercent={riskPercent}
+        handleRiskPercentChange={handleRiskPercentChange}
+      />
 
       {/* Profit Scenarios */}
       <div className='p-4 border border-neutral-200 dark:border-neutral-700 rounded-lg space-y-3'>
@@ -380,6 +374,32 @@ const ResultsPanel = ({
           </div>
         </div>
       )}
+
+      {/* Liquidation Analysis */}
+      <div className='p-4 border border-neutral-200 dark:border-neutral-700 rounded-lg space-y-3'>
+        <h2 className='text-base font-medium text-neutral-900 dark:text-neutral-100 mb-2'>Liquidation Analysis</h2>
+        <div className='grid grid-cols-2 gap-3'>
+          <div>
+            <label className='text-xs font-medium text-neutral-500 dark:text-neutral-400 mb-1 block'>Liquidation Price (Est.)</label>
+            <div className='h-9 px-3 py-2 text-sm font-medium rounded-md border border-neutral-200 dark:border-neutral-800 bg-neutral-100 dark:bg-neutral-800/50 text-red-500 dark:text-red-400'>
+              {formatPrice(liquidationPrice)}
+            </div>
+            <p className='text-xs text-neutral-500 dark:text-neutral-400 mt-1'>Based on margin & MMR</p>
+          </div>
+          <div>
+            <label className='text-xs font-medium text-neutral-500 dark:text-neutral-400 mb-1 block'>Real Liq. Price (Cross)</label>
+            <div className='h-9 px-3 py-2 text-sm font-medium rounded-md border border-neutral-200 dark:border-neutral-800 bg-neutral-100 dark:bg-neutral-800/50 text-red-500 dark:text-red-400'>
+              {formatPrice(realLiquidationPrice)}
+            </div>
+            <p className='text-xs text-neutral-500 dark:text-neutral-400 mt-1'>Includes account buffer</p>
+          </div>
+        </div>
+        <div className='p-2 border border-blue-200 dark:border-blue-800 rounded-md bg-blue-50 dark:bg-blue-900/20'>
+          <p className='text-xs text-blue-700 dark:text-blue-300'>
+            <strong>Liquidation buffer:</strong> {formatNumber(Math.max(0, accountSize - effectiveMargin))} USDT extra funds provide additional protection.
+          </p>
+        </div>
+      </div>
     </div>
   )
 }

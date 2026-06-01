@@ -4,7 +4,6 @@ import { usePriceUpdater } from './hooks/useBinanceAPI'
 import TradeSetup from './components/TradeSetup'
 import TakeProfitTargets from './components/TakeProfitTargets'
 import StopLossConfig from './components/StopLossConfig'
-import PositionSizing from './components/PositionSizing'
 import ResultsPanel from './components/ResultsPanel'
 
 const BinanceFuturesCalculatorNew = () => {
@@ -103,18 +102,6 @@ const BinanceFuturesCalculatorNew = () => {
             isLoadingPrice={priceLoading}
           />
 
-          {/* Position Sizing */}
-          <PositionSizing
-            calculationMode={calculatorState.calculationMode}
-            setCalculationMode={calculatorState.setCalculationMode}
-            useStopLoss={calculatorState.useStopLoss}
-            positionSizeUSDTInput={calculatorState.positionSizeUSDTInput}
-            positionSizeUSDT={calculatorState.positionSizeUSDT}
-            handlePositionSizeChange={calculatorState.handlePositionSizeChange}
-            riskPercentInput={calculatorState.riskPercentInput}
-            riskPercent={calculatorState.riskPercent}
-            handleRiskPercentChange={calculatorState.handleRiskPercentChange}
-          />
         </div>
 
         {/* Right column - Results */}
