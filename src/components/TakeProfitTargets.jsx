@@ -7,7 +7,10 @@ const TakeProfitTargets = ({
   handleTakeProfitChange,
   handleTakeProfitPreset,
   tradeDirection,
-  entryPrice
+  entryPrice,
+  tpAutoPriceUpdate,
+  handleTPAutoPriceToggle,
+  isLoadingPrice
 }) => {
   return (
     <div className='space-y-3 p-4 border border-neutral-200 dark:border-neutral-700 rounded-lg'>
@@ -54,7 +57,22 @@ const TakeProfitTargets = ({
                 </div>
               </div>
               <div className='grid grid-cols-3 gap-2 items-center'>
-                <label className='text-xs text-neutral-500 dark:text-neutral-400 col-span-1'>Price</label>
+                <div className='flex justify-between items-center mb-1 col-span-1'>
+                  <label className='text-xs font-medium text-neutral-500 dark:text-neutral-400'>
+                    Price
+                    {isLoadingPrice && <span className='text-blue-500 ml-1'>(updating...)</span>}
+                  </label>
+                  <button
+                    onClick={() => handleTPAutoPriceToggle(index, !tpAutoPriceUpdate[index])}
+                    className={`text-xs px-2 py-1 rounded transition-colors ${
+                      tpAutoPriceUpdate[index]
+                        ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
+                        : 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-400'
+                    }`}
+                    title={tpAutoPriceUpdate[index] ? 'Auto price updates enabled' : 'Manual price mode - auto updates disabled'}>
+                    {tpAutoPriceUpdate[index] ? '🔄 Auto' : '✋ Manual'}
+                  </button>
+                </div>
                 <div className='flex col-span-2 relative'>
                   <input
                     type='text'

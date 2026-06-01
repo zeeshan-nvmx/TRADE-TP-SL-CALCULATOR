@@ -11,12 +11,25 @@ const BinanceFuturesCalculatorNew = () => {
   const calculatorState = useCalculator()
   const { price: currentPrice, loading: priceLoading, status: priceStatus } = usePriceUpdater(calculatorState.symbol, 3000)
 
-  // Update entry price when we get a new price from the API (only if auto mode is enabled)
+  // Update entry price and any auto-enabled TP/SL fields when we get a new price from the API
   useEffect(() => {
     if (calculatorState.autoPriceUpdate && currentPrice && currentPrice !== calculatorState.entryPrice) {
       calculatorState.handleEntryPriceChange(currentPrice.toString())
     }
-  }, [currentPrice, calculatorState.autoPriceUpdate, calculatorState.entryPrice, calculatorState.handleEntryPriceChange])
+    if (calculatorState.tpAutoPriceUpdate[0] && currentPrice && currentPrice !== calculatorState.takeProfits[0].price) {
+      calculatorState.handleTakeProfitChange(0, 'priceInput', currentPrice.toString())
+    }
+    if (calculatorState.tpAutoPriceUpdate[1] && currentPrice && currentPrice !== calculatorState.takeProfits[1].price) {
+      calculatorState.handleTakeProfitChange(1, 'priceInput', currentPrice.toString())
+    }
+    if (calculatorState.tpAutoPriceUpdate[2] && currentPrice && currentPrice !== calculatorState.takeProfits[2].price) {
+      calculatorState.handleTakeProfitChange(2, 'priceInput', currentPrice.toString())
+    }
+    if (calculatorState.slAutoPriceUpdate && currentPrice && currentPrice !== calculatorState.stopLossPrice) {
+      calculatorState.handleStopLossPriceChange(currentPrice.toString())
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentPrice, calculatorState.autoPriceUpdate, calculatorState.tpAutoPriceUpdate, calculatorState.slAutoPriceUpdate, calculatorState.entryPrice, calculatorState.takeProfits, calculatorState.stopLossPrice, calculatorState.handleEntryPriceChange, calculatorState.handleTakeProfitChange, calculatorState.handleStopLossPriceChange])
 
   return (
     <div className='max-w-4xl mx-auto p-4 dark:bg-black bg-white text-sm font-sans'>
@@ -55,6 +68,9 @@ const BinanceFuturesCalculatorNew = () => {
             handleTakeProfitPreset={calculatorState.handleTakeProfitPreset}
             tradeDirection={calculatorState.tradeDirection}
             entryPrice={calculatorState.entryPrice}
+            tpAutoPriceUpdate={calculatorState.tpAutoPriceUpdate}
+            handleTPAutoPriceToggle={calculatorState.handleTPAutoPriceToggle}
+            isLoadingPrice={priceLoading}
           />
 
           {/* Stop Loss */}
@@ -81,6 +97,10 @@ const BinanceFuturesCalculatorNew = () => {
             trailingStopSimulationPriceInput={calculatorState.trailingStopSimulationPriceInput}
             handleTrailingStopSimulationPriceChange={calculatorState.handleTrailingStopSimulationPriceChange}
             trailingStopTriggerPrice={calculatorState.trailingStopTriggerPrice}
+            trailingStopSimulationPrice={calculatorState.trailingStopSimulationPrice}
+            slAutoPriceUpdate={calculatorState.slAutoPriceUpdate}
+            handleSLAutoPriceToggle={calculatorState.handleSLAutoPriceToggle}
+            isLoadingPrice={priceLoading}
           />
 
           {/* Position Sizing */}
