@@ -22,9 +22,19 @@ A single focused phase that corrects the TP fee bug, extends the auto-price togg
 **Plans**: 3 plans
 
 Plans:
+
+**Wave 1**
 - [ ] 01-01-PLAN.md — Fix TP exit fee (taker not maker) and update position sizing defaults/presets
+
+**Wave 2** *(blocked on Wave 1 completion)*
 - [ ] 01-02-PLAN.md — Extend useCalculator hook with per-field auto-price state and handlers
+
+**Wave 3** *(blocked on Wave 2 completion)*
 - [ ] 01-03-PLAN.md — Add auto/manual toggle buttons to TP and SL components, wire to price feed
+
+Cross-cutting constraints:
+- All TP exits must use taker fee (FEE-01) — no maker fee in any exit calculation branch
+- Per-field auto-price state (`tpAutoPriceUpdate[index]`, `slAutoPriceUpdate`) must remain separate from `takeProfits` array to avoid breaking quantity redistribution logic
 
 **UI hint**: yes
 
