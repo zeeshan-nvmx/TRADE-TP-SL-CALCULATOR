@@ -31,10 +31,11 @@ const TakeProfitTargets = ({
               />
               <span className='text-xs font-medium text-neutral-700 dark:text-neutral-300'>TP {index + 1}</span>
             </div>
-            {tp.enabled && formatNumber(tp.profit) !== 'N/A' && tp.profit !== 0 && (
-              <div className={`text-xs font-medium ${tp.profit > 0 ? 'text-green-600 dark:text-green-400' : 'text-red-500 dark:text-red-400'}`}>
-                Net Profit: {tp.profit > 0 ? '+' : ''}
-                {formatNumber(tp.profit)} USDT
+            {tp.enabled && (
+              <div className={`text-xs font-medium tabular-nums ${
+                tp.profit > 0 ? 'text-green-600 dark:text-green-400' : 'text-red-500 dark:text-red-400'
+              } ${formatNumber(tp.profit) === 'N/A' || tp.profit === 0 ? 'invisible' : ''}`}>
+                Net Profit: {tp.profit > 0 ? '+' : ''}{formatNumber(tp.profit)} USDT
               </div>
             )}
           </div>
@@ -56,12 +57,9 @@ const TakeProfitTargets = ({
                   </div>
                 </div>
               </div>
-              <div className='grid grid-cols-3 gap-2 items-center'>
-                <div className='flex justify-between items-center mb-1 col-span-1'>
-                  <label className='text-xs font-medium text-neutral-500 dark:text-neutral-400'>
-                    Price
-                    {isLoadingPrice && <span className='text-blue-500 ml-1'>(updating...)</span>}
-                  </label>
+              <div>
+                <div className='flex justify-between items-center mb-1'>
+                  <label className='text-xs font-medium text-neutral-500 dark:text-neutral-400'>Price</label>
                   <button
                     onClick={() => handleTPAutoPriceToggle(index, !tpAutoPriceUpdate[index])}
                     className={`text-xs px-2 py-1 rounded transition-colors ${
@@ -73,7 +71,7 @@ const TakeProfitTargets = ({
                     {tpAutoPriceUpdate[index] ? '🔄 Auto' : '✋ Manual'}
                   </button>
                 </div>
-                <div className='flex col-span-2 relative'>
+                <div className='flex relative'>
                   <input
                     type='text'
                     inputMode='decimal'
