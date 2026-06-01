@@ -1,0 +1,26 @@
+{
+  "version": "1.0",
+  "timestamp": "2026-06-01T09:46:42Z",
+  "phase": "01.1",
+  "phase_name": "fee-mode-selectors",
+  "phase_dir": ".planning/phases/01.1-fee-mode-selectors",
+  "plan": 1,
+  "task": 0,
+  "total_tasks": 2,
+  "status": "paused",
+  "completed_tasks": [],
+  "remaining_tasks": [
+    {"id": 1, "name": "Add fee mode state to useCalculator and wire into calculateAll", "status": "not_started"},
+    {"id": 2, "name": "Add Taker/Maker toggle buttons in TradeSetup", "status": "not_started"}
+  ],
+  "blockers": [],
+  "human_actions_pending": [],
+  "decisions": [
+    {"decision": "SL auto-price toggle derives SL from percent, not live market price", "rationale": "Live price ≈ entry price → always invalid SL. Percent-derived price is always valid.", "phase": "ad-hoc"},
+    {"decision": "Orchestrator useEffect deps narrowed to [currentPrice, autoPriceUpdate, tpAutoPriceUpdate]", "rationale": "Including handler functions (not useCallback) caused infinite render loop; handler functions are new refs every render.", "phase": "ad-hoc"},
+    {"decision": "Position Sizing moved to right column above Profit Scenarios; Liquidation Analysis moved to bottom", "rationale": "User preference — keeps input-adjacent results together", "phase": "ad-hoc"}
+  ],
+  "uncommitted_files": [],
+  "next_action": "Execute Phase 01.1 Plan 01 (01.1-01-PLAN.md): add entryFeeMode/tpFeeMode/slFeeMode/trailingFeeMode state to useCalculator, wire into calculateAll, then add 2×2 Taker/Maker grid in TradeSetup.",
+  "context_notes": "Phase 01 (calculator-accuracy-ux-fixes) is fully complete with all 3 plans done. Several ad-hoc tasks were also completed this session (Vite/React upgrade, layout reorder, two bug fixes). Phase 01.1 plan is written and ready to execute — no discussion or research needed, just run the two tasks in 01.1-01-PLAN.md."
+}
