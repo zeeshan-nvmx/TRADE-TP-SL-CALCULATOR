@@ -42,8 +42,8 @@ export const useCalculator = () => {
 
   const [lastUpdated, setLastUpdated] = useState({ tp: Array(3).fill('price'), sl: 'price' })
   const [calculationMode, setCalculationMode] = useState('fixed')
-  const [positionSizeUSDTInput, setPositionSizeUSDTInput] = useState('100')
-  const [positionSizeUSDT, setPositionSizeUSDT] = useState(100)
+  const [positionSizeUSDTInput, setPositionSizeUSDTInput] = useState('50')
+  const [positionSizeUSDT, setPositionSizeUSDT] = useState(50)
   const [riskPercentInput, setRiskPercentInput] = useState('20')
   const [riskPercent, setRiskPercent] = useState(20)
 
@@ -441,7 +441,7 @@ export const useCalculator = () => {
     // Fees
     const fees = EXCHANGE_FEES[exchange]
     const entryFeeRate = fees.taker
-    const tpFeeRate = fees.maker
+    const tpFeeRate = fees.taker
     const slFeeRate = fees.taker
     const trailingSlFeeRate = fees.taker
     const calcEntryFee = calculatedPositionSize * entryFeeRate
