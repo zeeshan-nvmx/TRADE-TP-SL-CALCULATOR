@@ -24,7 +24,7 @@ A single focused phase that corrects the TP fee bug, extends the auto-price togg
 Plans:
 
 **Wave 1**
-- [ ] 01-01-PLAN.md — Fix TP exit fee (taker not maker) and update position sizing defaults/presets
+- [x] 01-01-PLAN.md — Fix TP exit fee (taker not maker) and update position sizing defaults/presets
 
 **Wave 2** *(blocked on Wave 1 completion)*
 - [ ] 01-02-PLAN.md — Extend useCalculator hook with per-field auto-price state and handlers
@@ -42,4 +42,4 @@ Cross-cutting constraints:
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Calculator Accuracy & UX Fixes | 0/3 | Not started | - |
+| 1. Calculator Accuracy & UX Fixes | 1/3 | In Progress|  |

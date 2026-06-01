@@ -2,10 +2,10 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: planned
-stopped_at: Phase 1 planned (3 plans, 3 waves)
-last_updated: "2026-06-01T08:00:00.000Z"
-last_activity: 2026-06-01 — Phase 1 planned
+status: executing
+stopped_at: Phase 1 UI-SPEC approved
+last_updated: "2026-06-01T07:39:08.817Z"
+last_activity: 2026-06-01 -- Phase 01 execution started
 progress:
   total_phases: 1
   completed_phases: 0
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-01)
 
 **Core value:** Accurate net P&L calculation after real fees — so every trade decision reflects what actually lands in the account
-**Current focus:** Phase 1 — Calculator Accuracy & UX Fixes
+**Current focus:** Phase 01 — calculator-accuracy-ux-fixes
 
 ## Current Position
 
-Phase: 1 of 1 (Calculator Accuracy & UX Fixes)
-Plan: 0 of 3 in current phase
-Status: Ready to execute
-Last activity: 2026-06-01 — Phase 1 planned (3 plans, 3 waves)
+Phase: 01 (calculator-accuracy-ux-fixes) — EXECUTING
+Plan: 1 of 3
+Status: Executing Phase 01
+Last activity: 2026-06-01 -- Phase 01 execution started
 
 Progress: [░░░░░░░░░░] 0%
 
