@@ -119,6 +119,23 @@ export const useCalculator = () => {
 
   const handleSLAutoPriceToggle = (enabled) => {
     setSLAutoPriceUpdate(enabled)
+    if (enabled) {
+      // Auto mode: derive SL price from the current percent so it's immediately valid
+      setLastUpdated((prev) => ({ ...prev, sl: 'percent' }))
+      if (entryPrice > 0 && stopLossPercentInput) {
+        const slPercent = parseFloatInput(stopLossPercentInput)
+        if (slPercent !== null && slPercent > 0) {
+          const newSLPrice = entryPrice * (1 + (tradeDirection === 'LONG' ? -slPercent : slPercent) / 100)
+          if (newSLPrice > 0) {
+            setStopLossPrice(newSLPrice)
+            setStopLossPriceInput(newSLPrice.toFixed(8))
+          }
+        }
+      }
+    } else {
+      // Manual mode: lock price as-is, stop auto-updating
+      setLastUpdated((prev) => ({ ...prev, sl: 'price' }))
+    }
   }
 
   // --- Trailing Stop Loss Handlers ---

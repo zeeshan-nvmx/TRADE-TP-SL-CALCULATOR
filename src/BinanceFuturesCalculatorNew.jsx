@@ -10,25 +10,26 @@ const BinanceFuturesCalculatorNew = () => {
   const calculatorState = useCalculator()
   const { price: currentPrice, loading: priceLoading, status: priceStatus } = usePriceUpdater(calculatorState.symbol, 3000)
 
-  // Update entry price and any auto-enabled TP/SL fields when we get a new price from the API
+  // Update entry price and any auto-enabled TP fields when we get a new price from the API.
+  // Deps intentionally omit handler functions (recreated every render) and derived state values
+  // (takeProfits, entryPrice, stopLossPrice) to prevent an infinite update loop — the closure is
+  // always fresh when currentPrice changes, which is the only meaningful trigger here.
   useEffect(() => {
-    if (calculatorState.autoPriceUpdate && currentPrice && currentPrice !== calculatorState.entryPrice) {
+    if (!currentPrice) return
+    if (calculatorState.autoPriceUpdate && currentPrice !== calculatorState.entryPrice) {
       calculatorState.handleEntryPriceChange(currentPrice.toString())
     }
-    if (calculatorState.tpAutoPriceUpdate[0] && currentPrice && currentPrice !== calculatorState.takeProfits[0].price) {
+    if (calculatorState.tpAutoPriceUpdate[0] && currentPrice !== calculatorState.takeProfits[0].price) {
       calculatorState.handleTakeProfitChange(0, 'priceInput', currentPrice.toString())
     }
-    if (calculatorState.tpAutoPriceUpdate[1] && currentPrice && currentPrice !== calculatorState.takeProfits[1].price) {
+    if (calculatorState.tpAutoPriceUpdate[1] && currentPrice !== calculatorState.takeProfits[1].price) {
       calculatorState.handleTakeProfitChange(1, 'priceInput', currentPrice.toString())
     }
-    if (calculatorState.tpAutoPriceUpdate[2] && currentPrice && currentPrice !== calculatorState.takeProfits[2].price) {
+    if (calculatorState.tpAutoPriceUpdate[2] && currentPrice !== calculatorState.takeProfits[2].price) {
       calculatorState.handleTakeProfitChange(2, 'priceInput', currentPrice.toString())
     }
-    if (calculatorState.slAutoPriceUpdate && currentPrice && currentPrice !== calculatorState.stopLossPrice) {
-      calculatorState.handleStopLossPriceChange(currentPrice.toString())
-    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentPrice, calculatorState.autoPriceUpdate, calculatorState.tpAutoPriceUpdate, calculatorState.slAutoPriceUpdate, calculatorState.entryPrice, calculatorState.takeProfits, calculatorState.stopLossPrice, calculatorState.handleEntryPriceChange, calculatorState.handleTakeProfitChange, calculatorState.handleStopLossPriceChange])
+  }, [currentPrice, calculatorState.autoPriceUpdate, calculatorState.tpAutoPriceUpdate])
 
   return (
     <div className='max-w-4xl mx-auto p-4 dark:bg-black bg-white text-sm font-sans'>
