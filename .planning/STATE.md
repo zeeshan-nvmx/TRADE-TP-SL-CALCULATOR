@@ -80,6 +80,12 @@ None yet.
 | Price feed | WebSocket-based price feed (lower latency) | v2 | Roadmap init |
 | Price feed | Bybit live price feed | v2 | Roadmap init |
 
+## Quick Tasks Completed
+
+| Slug | Date | Description |
+|------|------|-------------|
+| upgrade-react-vite | 2026-06-01 | Upgrade react/react-dom to 19.2.6, vite to 8.0.15, @vitejs/plugin-react to 6.0.2 |
+
 ## Session Continuity
 
 Last session: 2026-06-01T07:28:07.071Z

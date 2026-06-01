@@ -64,22 +64,20 @@ const TradeSetup = ({
         </div>
         <div>
           <label className='text-xs font-medium text-neutral-500 dark:text-neutral-400 mb-1 block'>Symbol</label>
-          <div className='relative'>
-            <SymbolSelector 
-              symbol={symbol}
-              setSymbol={setSymbol}
-            />
+          <div className='flex items-center gap-2'>
+            <div className='flex-1 min-w-0'>
+              <SymbolSelector
+                symbol={symbol}
+                setSymbol={setSymbol}
+              />
+            </div>
             {priceUpdateStatus && (
-              <div 
-                className={`absolute -right-6 top-1/2 transform -translate-y-1/2 text-xs ${
-                  priceUpdateStatus === 'connected' ? 'text-green-500' :
-                  priceUpdateStatus === 'connecting' ? 'text-yellow-500' :
-                  'text-red-500'
-                }`}
+              <span
+                className='text-xs flex-shrink-0'
                 title={`Price updates: ${priceUpdateStatus}`}>
                 {priceUpdateStatus === 'connected' ? '🟢' :
                  priceUpdateStatus === 'connecting' ? '🟡' : '🔴'}
-              </div>
+              </span>
             )}
           </div>
         </div>
