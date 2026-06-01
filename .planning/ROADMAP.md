@@ -6,7 +6,7 @@ A single focused phase that corrects the TP fee bug, extends the auto-price togg
 
 ## Phases
 
-- [ ] **Phase 1: Calculator Accuracy & UX Fixes** - Fix fee rates, extend auto-price toggles to TP/SL, and update position sizing defaults
+- [x] **Phase 1: Calculator Accuracy & UX Fixes** - Fix fee rates, extend auto-price toggles to TP/SL, and update position sizing defaults (completed 2026-06-01)
 
 ## Phase Details
 
@@ -30,7 +30,7 @@ Plans:
 - [x] 01-02-PLAN.md — Extend useCalculator hook with per-field auto-price state and handlers
 
 **Wave 3** *(blocked on Wave 2 completion)*
-- [ ] 01-03-PLAN.md — Add auto/manual toggle buttons to TP and SL components, wire to price feed
+- [x] 01-03-PLAN.md — Add auto/manual toggle buttons to TP and SL components, wire to price feed
 
 Cross-cutting constraints:
 - All TP exits must use taker fee (FEE-01) — no maker fee in any exit calculation branch
@@ -42,4 +42,4 @@ Cross-cutting constraints:
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Calculator Accuracy & UX Fixes | 2/3 | In Progress|  |
+| 1. Calculator Accuracy & UX Fixes | 3/3 | Complete   | 2026-06-01 |
