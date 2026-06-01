@@ -111,6 +111,16 @@ export const useCalculator = () => {
     setRiskPercent(p !== null && p >= 0 ? p : 0)
   }
 
+  const handleTPAutoPriceToggle = (index, enabled) => {
+    const updated = [...tpAutoPriceUpdate]
+    updated[index] = enabled
+    setTPAutoPriceUpdate(updated)
+  }
+
+  const handleSLAutoPriceToggle = (enabled) => {
+    setSLAutoPriceUpdate(enabled)
+  }
+
   // --- Trailing Stop Loss Handlers ---
   const handleTrailingStopPercentChange = (value) => {
     setTrailingStopPercentInput(value)
@@ -722,6 +732,12 @@ export const useCalculator = () => {
     setUseStopLoss,
     setUseTrailingStop,
     setAutoPriceUpdate,
+    tpAutoPriceUpdate,
+    slAutoPriceUpdate,
+    setTPAutoPriceUpdate,
+    setSLAutoPriceUpdate,
+    handleTPAutoPriceToggle,
+    handleSLAutoPriceToggle,
     handleAccountSizeChange,
     handleLeverageChange,
     handleEntryPriceChange,
