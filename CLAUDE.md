@@ -238,3 +238,204 @@ Pre-configured values for quick input:
 - **Large Component**: File may be slow to load in editors due to size
 - **Frequent Recalculations**: Multiple useEffect hooks trigger on input changes
 - **String Comparisons**: JSON.stringify used for deep state change detection
+
+<!-- GSD:project-start source:PROJECT.md -->
+## Project
+
+**Trade TP/SL Calculator**
+
+A personal web-based futures trading calculator for Binance and Bybit. It calculates position sizing, take profit and stop loss targets, fee impact, liquidation prices, and net P&L including trailing stop scenarios. Live entry price is fetched from the Binance Futures API with an auto/manual toggle.
+
+**Core Value:** Accurate net P&L calculation after real fees — so every trade decision reflects what actually lands in the account.
+
+### Constraints
+
+- **Stack**: React + Vite + Tailwind — no framework changes
+- **API**: Must continue using `fapi.binance.com/fapi/v1/ticker/price` — same endpoint, same 3s interval
+- **No API key**: Binance public endpoints only
+<!-- GSD:project-end -->
+
+<!-- GSD:stack-start source:codebase/STACK.md -->
+## Technology Stack
+
+## Summary
+## Languages
+- JavaScript (ES2020+) — all source files use `.js` / `.jsx` extensions; no TypeScript in use despite `@types/react` being listed as a dev dependency
+- CSS — `src/index.css` for global base styles, Tailwind utility classes used inline throughout components
+## Runtime
+- Browser only — no Node.js server runtime
+- Node.js is used only for the Vite dev/build toolchain
+- npm — `package-lock.json` is present and committed
+## Frameworks
+- React `^19.0.0` (`react`, `react-dom`) — UI rendering, hooks-based state management
+- Vite `^6.2.0` — dev server, HMR, production bundler
+- `@vitejs/plugin-react` `^4.3.4` — Babel-based JSX transform for Vite
+- Tailwind CSS `^3.4.17` — utility-first CSS
+- PostCSS `^8.5.3` — required by Tailwind; config: `postcss.config.js`
+- Autoprefixer `^10.4.21` — PostCSS plugin for vendor prefixes
+- None — no test runner, no assertion library
+## Key Dependencies
+- `react` `^19.0.0` — component model and hooks (`useState`, `useEffect`, `useCallback`)
+- `react-dom` `^19.0.0` — DOM renderer; entry point `src/main.jsx` calls `ReactDOM.createRoot`
+- `eslint` `^9.21.0` — linting; flat config in `eslint.config.js`
+- `eslint-plugin-react-hooks` `^5.1.0` — enforces Rules of Hooks
+- `eslint-plugin-react-refresh` `^0.4.19` — warns on non-component exports that break HMR
+- `globals` `^15.15.0` — browser global definitions for ESLint
+- `@types/react` `^19.0.10`, `@types/react-dom` `^19.0.4` — TypeScript type definitions (present but TypeScript itself is not used)
+## Configuration Files
+| File | Purpose |
+|------|---------|
+| `vite.config.js` | Vite build config — registers `@vitejs/plugin-react` |
+| `tailwind.config.js` | Tailwind content paths, dark mode strategy (`class`) |
+| `postcss.config.js` | PostCSS plugins for Tailwind + Autoprefixer |
+| `eslint.config.js` | Flat ESLint config — JS/JSX, react-hooks, react-refresh rules |
+| `index.html` | Vite entry HTML — mounts `<div id="root">`, loads `src/main.jsx` |
+| `package.json` | Project manifest; scripts: `dev`, `build`, `lint`, `preview` |
+## Build Commands
+## Platform Requirements
+- Node.js (version not pinned — no `.nvmrc` or `.node-version` file)
+- npm (lockfile present)
+- Static file hosting only — the `dist/` output is a fully static site with no server-side requirements
+- No environment variables required at build time (all runtime config is hardcoded or user-provided)
+<!-- GSD:stack-end -->
+
+<!-- GSD:conventions-start source:CONVENTIONS.md -->
+## Conventions
+
+## Summary
+## Naming Patterns
+- React components: PascalCase `.jsx` — e.g., `TradeSetup.jsx`, `ResultsPanel.jsx`, `TakeProfitTargets.jsx`
+- Hooks: camelCase prefixed with `use`, `.js` extension — e.g., `useCalculator.js`, `useBinanceAPI.js`
+- Utilities: camelCase noun `.js` — e.g., `calculations.js`
+- Services: camelCase noun `.js` — e.g., `binanceAPI.js`
+- Constants: camelCase noun `.js` — e.g., `presets.js`
+- Event handlers: `handle` prefix — e.g., `handleEntryPriceChange`, `handleTakeProfitPreset`, `handleStopLossPercentChange`
+- Setters exposed from hooks: `set` prefix matching the state name — e.g., `setExchange`, `setTradeDirection`
+- Utility functions: verb + noun — e.g., `formatNumber`, `safeDivide`, `parseFloatInput`, `formatHighPrecision`, `formatPrice`
+- Async service functions: verb + noun — e.g., `fetchFuturesSymbols`, `fetchSymbolPrice`, `fetchMultiplePrices`
+- Input string mirror: `[fieldName]Input` alongside the parsed numeric — e.g., `entryPriceInput` / `entryPrice`, `leverageInput` / `leverage`
+- Boolean toggles: `use` prefix — e.g., `useStopLoss`, `useTrailingStop`, `autoPriceUpdate`
+- Calculated results: descriptive — e.g., `weightedTakeProfit`, `grossLossAmount`, `effectiveMargin`
+- SCREAMING_SNAKE_CASE — e.g., `EXCHANGE_FEES`, `LEVERAGE_PRESETS`, `DEFAULT_TAKE_PROFITS`, `MMR`
+- No TypeScript; plain JavaScript with JSDoc-style comments where beneficial
+## Input State Pattern
+## Hook Patterns
+- Owns all calculator state and all handler functions
+- Returns a flat object of state + handlers (no nesting)
+- `calculateAll()` is the single calculation entry point, triggered by a `useEffect` that lists all input dependencies explicitly
+- The `eslint-disable-next-line react-hooks/exhaustive-deps` comment is intentional on the main `calculateAll` effect — do not remove it without careful review
+- Uses `useCallback` for functions that are themselves listed as `useEffect` dependencies (`calculateTrailingStopTrigger`, `updateTPPriceFromPercent`, `updateSLPriceFromPercent`)
+- The dependency array for the main calculation effect uses `JSON.stringify(...)` for the `takeProfits` array to avoid object reference instability
+- Data-fetching hooks only — no calculation logic
+- `usePriceUpdater` sets up a `setInterval` for live price polling (default 3000ms) and cleans up on unmount/symbol change
+- Exposes a `status` string: `'connected' | 'connecting' | 'disconnected' | 'error'`
+## Component Design
+- Every component destructures its props explicitly in the function signature
+- Exception: `<ResultsPanel {...calculatorState} />` in `BinanceFuturesCalculatorNew.jsx` — this is intentional to avoid a very long prop list, but it means `ResultsPanel` is tightly coupled to the `useCalculator` return shape
+- No components compute derived values — all math happens in `useCalculator`
+- Components only call handler functions passed as props
+## Tailwind Usage
+- Green (`green-600` / `dark:green-400`): profit, LONG active, connected status
+- Red (`red-500` / `dark:red-400`): loss, invalid inputs, error state
+- Amber (`amber-500` / `dark:amber-400`): warnings (margin exceeded)
+- Blue (`blue-200`/`blue-700` etc.): informational callout boxes
+- Yellow (`yellow-300`/`yellow-700` etc.): risk warning callouts
+## Import Organization
+## Code Style
+- Section comments inside long functions use `// --- Section Name ---` format (see `useCalculator.js`)
+- Inline clarification comments on non-obvious logic only
+- No JSDoc on component functions; prop documentation is implicit from destructuring
+## Module Design
+- Components: single default export per file
+- Hooks: named exports (`export const useCalculator = ...`)
+- Utils/services/constants: named exports only, no default exports
+<!-- GSD:conventions-end -->
+
+<!-- GSD:architecture-start source:ARCHITECTURE.md -->
+## Architecture
+
+## Summary
+## Component Hierarchy
+```
+```
+## Component Responsibilities
+| Component | Responsibility | File |
+|-----------|----------------|------|
+| `BinanceFuturesCalculatorNew` | Orchestrates all state, stitches together price polling and calculator hooks, lays out the two-column grid | `src/BinanceFuturesCalculatorNew.jsx` |
+| `TradeSetup` | Exchange selector, account size, symbol, leverage presets, trade direction, entry price field, auto/manual price toggle | `src/components/TradeSetup.jsx` |
+| `SymbolSelector` | Searchable dropdown for Binance futures symbols; fetches symbol list itself via `useBinanceSymbols` | `src/components/SymbolSelector.jsx` |
+| `TakeProfitTargets` | Up to 3 TP targets, each with price/percent dual input and quantity allocation | `src/components/TakeProfitTargets.jsx` |
+| `StopLossConfig` | Fixed SL (price/percent dual input) and trailing stop loss (activation price, simulation price, callback percent) | `src/components/StopLossConfig.jsx` |
+| `PositionSizing` | Toggles between fixed USDT margin mode and risk-percent mode | `src/components/PositionSizing.jsx` |
+| `ResultsPanel` | Read-only output: position size, margin, quantity, fees, liquidation prices, profit/loss scenarios, trailing SL scenario | `src/components/ResultsPanel.jsx` |
+## State Management
+- `accountSizeInput` / `accountSize`
+- `leverageInput` / `leverage`
+- `entryPriceInput` / `entryPrice`
+- `positionSizeUSDTInput` / `positionSizeUSDT`
+- `riskPercentInput` / `riskPercent`
+- `stopLossPriceInput` / `stopLossPrice`, `stopLossPercentInput` / `stopLossPercent`
+- `trailingStop*Input` / `trailingStop*` (percent, activation price, simulation price)
+- `takeProfits` array — each element carries both `priceInput`/`price` and `percentInput`/`percent`
+- `exchange` — `'binance'` or `'bybit'`
+- `tradeDirection` — `'LONG'` or `'SHORT'`
+- `calculationMode` — `'fixed'` (margin USDT) or `'risk'` (risk percent of account)
+- `useStopLoss`, `useTrailingStop`
+- `autoPriceUpdate` — controls whether live API price overwrites `entryPrice`
+- `quantity`, `effectiveMargin`, `totalPositionSize`
+- `lossAmount`, `lossPercent`, `grossLossAmount`, `grossLossPercent`
+- `weightedTakeProfit`, `weightedGrossTakeProfit`
+- `liquidationPrice`, `realLiquidationPrice`
+- `entryFee`, `exitFeeTP`, `exitFeeSL`, `exitFeeTrailingSL`, `totalFeesTP`, `totalFeesSL`, `totalFeesTrailingSL`
+- `riskRewardRatio`, `grossRiskRewardRatio`
+- Trailing stop calculated values: `trailingStopTriggerPrice`, `trailingStopLossAmount`, `trailingStopProfit`, etc.
+- `lastUpdated` — tracks whether each TP and the SL was last set by `'price'` or `'percent'`, used to determine which field to recalculate when `entryPrice` changes.
+## Data Flow
+### Live Price → Entry Price
+```
+```
+### User Input → Calculation
+```
+```
+### Symbol List → SymbolSelector
+```
+```
+## Auto / Manual Price Toggle Pattern
+```js
+```
+## TP/SL Dual-Input Sync Pattern
+- If `lastUpdated.tp[i] === 'percent'`, recompute price from percent.
+- If `lastUpdated.sl === 'percent'`, recompute SL price from percent.
+- If last set by `'price'`, the price field is stable and is not overwritten.
+## Calculation Engine
+## Error Handling
+## Anti-Patterns
+### Stale Dependency Suppression
+### Props Spread on ResultsPanel
+<!-- GSD:architecture-end -->
+
+<!-- GSD:skills-start source:skills/ -->
+## Project Skills
+
+No project skills found. Add skills to any of: `.claude/skills/`, `.agents/skills/`, `.cursor/skills/`, `.github/skills/`, or `.codex/skills/` with a `SKILL.md` index file.
+<!-- GSD:skills-end -->
+
+<!-- GSD:workflow-start source:GSD defaults -->
+## GSD Workflow Enforcement
+
+Before using Edit, Write, or other file-changing tools, start work through a GSD command so planning artifacts and execution context stay in sync.
+
+Use these entry points:
+- `/gsd-quick` for small fixes, doc updates, and ad-hoc tasks
+- `/gsd-debug` for investigation and bug fixing
+- `/gsd-execute-phase` for planned phase work
+
+Do not make direct repo edits outside a GSD workflow unless the user explicitly asks to bypass it.
+<!-- GSD:workflow-end -->
+
+<!-- GSD:profile-start -->
+## Developer Profile
+
+> Profile not yet configured. Run `/gsd-profile-user` to generate your developer profile.
+> This section is managed by `generate-claude-profile` -- do not edit manually.
+<!-- GSD:profile-end -->
