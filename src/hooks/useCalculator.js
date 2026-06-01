@@ -15,7 +15,9 @@ export const useCalculator = () => {
   const [tradeDirection, setTradeDirection] = useState('LONG')
   const [entryPriceInput, setEntryPriceInput] = useState('84882')
   const [entryPrice, setEntryPrice] = useState(84882)
-  const [autoPriceUpdate, setAutoPriceUpdate] = useState(true)
+  const [autoPriceUpdate, setAutoPriceUpdate] = useState(false)
+  const [tpAutoPriceUpdate, setTPAutoPriceUpdate] = useState([true, false, false])
+  const [slAutoPriceUpdate, setSLAutoPriceUpdate] = useState(false)
 
   const [takeProfits, setTakeProfits] = useState(DEFAULT_TAKE_PROFITS)
 
@@ -107,6 +109,16 @@ export const useCalculator = () => {
     setRiskPercentInput(value)
     const p = parseFloatInput(value)
     setRiskPercent(p !== null && p >= 0 ? p : 0)
+  }
+
+  const handleTPAutoPriceToggle = (index, enabled) => {
+    const updated = [...tpAutoPriceUpdate]
+    updated[index] = enabled
+    setTPAutoPriceUpdate(updated)
+  }
+
+  const handleSLAutoPriceToggle = (enabled) => {
+    setSLAutoPriceUpdate(enabled)
   }
 
   // --- Trailing Stop Loss Handlers ---
@@ -720,6 +732,12 @@ export const useCalculator = () => {
     setUseStopLoss,
     setUseTrailingStop,
     setAutoPriceUpdate,
+    tpAutoPriceUpdate,
+    slAutoPriceUpdate,
+    setTPAutoPriceUpdate,
+    setSLAutoPriceUpdate,
+    handleTPAutoPriceToggle,
+    handleSLAutoPriceToggle,
     handleAccountSizeChange,
     handleLeverageChange,
     handleEntryPriceChange,
