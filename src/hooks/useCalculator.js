@@ -12,7 +12,7 @@ export const useCalculator = () => {
   const [leverage, setLeverage] = useState(50)
   const [exceedsAccount, setExceedsAccount] = useState(false)
   const [requiredAccountSize, setRequiredAccountSize] = useState(0)
-  const [tradeDirection, setTradeDirection] = useState('LONG')
+  const [tradeDirection, setTradeDirection] = useState('SHORT')
   const [entryPriceInput, setEntryPriceInput] = useState('')
   const [entryPrice, setEntryPrice] = useState(0)
   const [autoPriceUpdate, setAutoPriceUpdate] = useState(false)
