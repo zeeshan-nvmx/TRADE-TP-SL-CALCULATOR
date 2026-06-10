@@ -86,6 +86,7 @@ None yet.
 |------|------|-------------|
 | upgrade-react-vite | 2026-06-01 | Upgrade react/react-dom to 19.2.6, vite to 8.0.15, @vitejs/plugin-react to 6.0.2 |
 | 260610-w0x-delete-unused-legacy-binancefuturescalcu | 2026-06-10 | Delete unused legacy BinanceFuturesCalculator.jsx (commit 856ab63) |
+| fast-fix-calculator-review-findings | 2026-06-10 | Remove hardcoded 85880 TP1 default (percent-driven now), fix TP handler state mutations, clear stale results on invalid entry, stop price status flicker, correct CLAUDE.md fee docs |
 
 ## Session Continuity
 

@@ -32,14 +32,21 @@ This is a comprehensive React-based futures trading calculator built with Vite. 
 ### File Structure
 ```
 src/
-├── main.jsx                      # React DOM rendering entry point
-├── App.jsx                       # Main app wrapper (renders BinanceFuturesCalculator)
-├── BinanceFuturesCalculator.jsx  # Core calculator (1642 lines, ~27k tokens)
-├── index.css                     # Global TailwindCSS imports
-└── assets/                       # Static React logo assets
+├── main.jsx                          # React DOM rendering entry point
+├── App.jsx                           # Main app wrapper (renders BinanceFuturesCalculatorNew)
+├── BinanceFuturesCalculatorNew.jsx   # Orchestrator: stitches hooks + components, two-column layout
+├── components/                       # TradeSetup, SymbolSelector, TakeProfitTargets, StopLossConfig, PositionSizing, ResultsPanel
+├── hooks/                            # useCalculator.js (all state + calculations), useBinanceAPI.js (symbol list + price polling)
+├── services/                         # binanceAPI.js — Binance Futures API fetchers
+├── constants/                        # presets.js — exchange fees, presets, default TP structure
+├── utils/                            # calculations.js — safeDivide, parseFloatInput, formatters
+├── index.css                         # Global TailwindCSS imports
+└── assets/                           # Static React logo assets
 ```
 
-## Core Component Architecture (BinanceFuturesCalculator.jsx)
+## Core Calculator Architecture (hooks/useCalculator.js + components/)
+
+Note: section line numbers below refer to the pre-refactor monolith and are approximate; the logic now lives in `hooks/useCalculator.js`, `constants/presets.js`, and `components/`.
 
 ### Helper Functions (lines 3-41)
 Located at the top of the file, these utility functions handle:
@@ -102,9 +109,9 @@ The component uses extensive local state with useState hooks:
 2. **Risk Mode**: `quantity = riskAmount / stopLossDistance` (requires valid SL)
 
 **Fee Structure:**
-- Binance: Maker 0.02%, Taker 0.04%
+- Binance: Maker 0.02%, Taker 0.05%
 - Bybit: Maker 0.01%, Taker 0.06%
-- Entry orders = Taker fees, TP orders = Maker fees, SL orders = Taker fees
+- ALL orders (entry, TP, SL, trailing SL) are charged taker fees — Phase 1 decision: user trades as market taker in both directions
 
 **Profit/Loss Calculations:**
 - **Gross P&L**: Price difference × Quantity (before fees)
