@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { fetchFuturesSymbols, fetchSymbolPrice } from '../services/binanceAPI'
 
 export const useBinanceSymbols = () => {
@@ -33,9 +33,14 @@ export const usePriceUpdater = (symbol, intervalMs = 3000) => {
   const [error, setError] = useState(null)
   const [lastUpdate, setLastUpdate] = useState(null)
   const [status, setStatus] = useState('disconnected') // 'connected', 'connecting', 'disconnected', 'error'
+  const inFlightRef = useRef(false)
 
   const fetchPrice = useCallback(async () => {
     if (!symbol) return
+    // Skip this tick if the previous request is still pending — it will either
+    // resolve or be aborted by its timeout, so requests never pile up.
+    if (inFlightRef.current) return
+    inFlightRef.current = true
 
     try {
       setLoading(true)
@@ -57,6 +62,7 @@ export const usePriceUpdater = (symbol, intervalMs = 3000) => {
       setStatus('error')
       console.error(`Failed to fetch price for ${symbol}:`, err)
     } finally {
+      inFlightRef.current = false
       setLoading(false)
     }
   }, [symbol])
