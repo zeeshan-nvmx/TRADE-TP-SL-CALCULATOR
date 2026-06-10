@@ -294,9 +294,9 @@ export const useCalculator = () => {
 
   // TP handlers
   const handleTakeProfitChange = (index, field, value) => {
-    let newTakeProfits = [...takeProfits]
+    let newTakeProfits = takeProfits.map((tp) => ({ ...tp }))
     const currentEntry = entryPrice
-    const newLastUpdated = { ...lastUpdated }
+    const newLastUpdated = { ...lastUpdated, tp: [...lastUpdated.tp] }
     let needsRedistribution = false
     let changedQuantityValue = null
 
@@ -350,8 +350,8 @@ export const useCalculator = () => {
   }
 
   const handleTakeProfitPreset = (index, percent) => {
-    let newTakeProfits = [...takeProfits]
-    const newLastUpdated = { ...lastUpdated }
+    let newTakeProfits = takeProfits.map((tp) => ({ ...tp }))
+    const newLastUpdated = { ...lastUpdated, tp: [...lastUpdated.tp] }
     const currentEntry = entryPrice
     newTakeProfits[index].percent = percent
     newTakeProfits[index].percentInput = percent.toString()
@@ -421,6 +421,38 @@ export const useCalculator = () => {
     const currentTakeProfits = takeProfits
 
     if (currentEntryPrice <= 0 || currentLeverage < 1) {
+      // No valid entry — clear derived results instead of leaving stale values on screen
+      setQuantity(0)
+      setEffectiveMargin(0)
+      setTotalPositionSize(0)
+      setWeightedTakeProfit(0)
+      setWeightedGrossTakeProfit(0)
+      setLossAmount(0)
+      setLossPercent(0)
+      setGrossLossAmount(0)
+      setGrossLossPercent(0)
+      setRiskRewardRatio(NaN)
+      setGrossRiskRewardRatio(NaN)
+      setLiquidationPrice(NaN)
+      setRealLiquidationPrice(NaN)
+      setEntryFee(0)
+      setExitFeeTP(0)
+      setExitFeeSL(0)
+      setExitFeeTrailingSL(0)
+      setTotalFeesTP(0)
+      setTotalFeesSL(0)
+      setTotalFeesTrailingSL(0)
+      setTrailingStopProfit(0)
+      setTrailingStopProfitPercent(0)
+      setTrailingStopLossAmount(0)
+      setTrailingStopLossPercent(0)
+      setRiskAmountDisplay(0)
+      setSlDistDisplay(0)
+      setExceedsAccount(false)
+      setRequiredAccountSize(0)
+      if (currentTakeProfits.some((tp) => tp.profit !== 0 || tp.grossProfit !== 0)) {
+        setTakeProfits(currentTakeProfits.map((tp) => ({ ...tp, profit: 0, profitPercent: 0, grossProfit: 0, grossProfitPercent: 0 })))
+      }
       return
     }
 

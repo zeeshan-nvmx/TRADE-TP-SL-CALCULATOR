@@ -39,7 +39,8 @@ export const usePriceUpdater = (symbol, intervalMs = 3000) => {
 
     try {
       setLoading(true)
-      setStatus('connecting')
+      // Stay 'connected' during routine polls — only show 'connecting' from a cold/error state
+      setStatus((prev) => (prev === 'connected' ? 'connected' : 'connecting'))
       const priceData = await fetchSymbolPrice(symbol)
       
       if (priceData) {

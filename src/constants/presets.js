@@ -23,10 +23,10 @@ export const FIXED_USDT_PRESETS = [
 export const DEFAULT_TAKE_PROFITS = [
   {
     enabled: true,
-    priceInput: '85880',
-    price: 85880,
-    percentInput: '1.18',
-    percent: 1.18,
+    priceInput: '',
+    price: null,
+    percentInput: '2',
+    percent: 2,
     quantityInput: '100',
     quantity: 100,
     profit: 0,
