@@ -88,6 +88,7 @@ None yet.
 | 260610-w0x-delete-unused-legacy-binancefuturescalcu | 2026-06-10 | Delete unused legacy BinanceFuturesCalculator.jsx (commit 856ab63) |
 | fast-fix-calculator-review-findings | 2026-06-10 | Remove hardcoded 85880 TP1 default (percent-driven now), fix TP handler state mutations, clear stale results on invalid entry, stop price status flicker, correct CLAUDE.md fee docs |
 | fast-harden-price-polling | 2026-06-10 | Add AbortSignal timeouts to Binance fetches and in-flight guard to usePriceUpdater — hung connections now self-heal instead of leaving requests pending forever |
+| fast-instant-pnl-on-entry | 2026-06-10 | Keep valid TP price when entry is empty and sync percent display for price-anchored TPs — P&L now shows immediately when entry price is typed |
 
 ## Session Continuity
 

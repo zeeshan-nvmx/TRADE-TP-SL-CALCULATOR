@@ -303,12 +303,19 @@ export const useCalculator = () => {
     if (field === 'priceInput') {
       newTakeProfits[index].priceInput = value
       const parsedPrice = parseFloatInput(value)
-      if (parsedPrice !== null && parsedPrice > 0 && currentEntry > 0) {
+      if (parsedPrice !== null && parsedPrice > 0) {
+        // Keep a valid price even without an entry price — only the percent
+        // needs an entry, and P&L can then compute the moment entry arrives
         newTakeProfits[index].price = parsedPrice
-        let newPercent = Math.abs(safeDivide(parsedPrice - currentEntry, currentEntry) * 100)
-        newTakeProfits[index].percent = newPercent
-        newTakeProfits[index].percentInput = newPercent.toFixed(2)
         newLastUpdated.tp[index] = 'price'
+        if (currentEntry > 0) {
+          let newPercent = Math.abs(safeDivide(parsedPrice - currentEntry, currentEntry) * 100)
+          newTakeProfits[index].percent = newPercent
+          newTakeProfits[index].percentInput = newPercent.toFixed(2)
+        } else {
+          newTakeProfits[index].percent = null
+          newTakeProfits[index].percentInput = ''
+        }
       } else {
         newTakeProfits[index].price = null
         newTakeProfits[index].percent = null
@@ -686,6 +693,13 @@ export const useCalculator = () => {
         if (updatedTP.price !== tp.price) {
           tpsChanged = true
           return updatedTP
+        }
+      } else if (lastUpdated.tp[index] === 'price' && tp.price > 0) {
+        // Price-anchored TP: keep the price, refresh the percent display from the new entry
+        const newPercent = Math.abs(safeDivide(tp.price - currentEntry, currentEntry) * 100)
+        if (tp.percent !== newPercent) {
+          tpsChanged = true
+          return { ...tp, percent: newPercent, percentInput: newPercent.toFixed(2) }
         }
       }
       return tp
