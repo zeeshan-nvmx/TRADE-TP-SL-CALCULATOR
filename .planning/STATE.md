@@ -28,7 +28,7 @@ See: .planning/PROJECT.md (updated 2026-06-01)
 Phase: 01 (calculator-accuracy-ux-fixes) — EXECUTING
 Plan: 1 of 3
 Status: Executing Phase 01
-Last activity: 2026-06-10 -- Completed quick task 260610-w0x: Delete unused legacy BinanceFuturesCalculator.jsx
+Last activity: 2026-06-23 -- Completed quick task 260623-cee: Reorder ResultsPanel sections on mobile
 
 Progress: [░░░░░░░░░░] 0%
 
@@ -89,6 +89,7 @@ None yet.
 | fast-fix-calculator-review-findings | 2026-06-10 | Remove hardcoded 85880 TP1 default (percent-driven now), fix TP handler state mutations, clear stale results on invalid entry, stop price status flicker, correct CLAUDE.md fee docs |
 | fast-harden-price-polling | 2026-06-10 | Add AbortSignal timeouts to Binance fetches and in-flight guard to usePriceUpdater — hung connections now self-heal instead of leaving requests pending forever |
 | fast-instant-pnl-on-entry | 2026-06-10 | Keep valid TP price when entry is empty and sync percent display for price-anchored TPs — P&L now shows immediately when entry price is typed |
+| 260623-cee-mobile-results-panel-reorder | 2026-06-23 | Reorder ResultsPanel sections on mobile (Position Sizing & P/L scenarios above Trade Analysis/Binance Fees/Liquidation); desktop unchanged (commit c732b5b) |
 
 ## Session Continuity
 
