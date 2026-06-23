@@ -59,9 +59,9 @@ const ResultsPanel = ({
   const slDistance = getSLDistance()
 
   return (
-    <div className='space-y-4'>
+    <div className='flex flex-col gap-4'>
       {/* Trade Analysis */}
-      <div className='p-4 border border-neutral-200 dark:border-neutral-700 rounded-lg space-y-3'>
+      <div className='order-4 md:order-1 p-4 border border-neutral-200 dark:border-neutral-700 rounded-lg space-y-3'>
         <h2 className='text-base font-medium text-neutral-900 dark:text-neutral-100 mb-2'>Trade Analysis</h2>
         <div className='grid grid-cols-2 gap-3'>
           <div>
@@ -112,7 +112,7 @@ const ResultsPanel = ({
       </div>
 
       {/* Fees Analysis */}
-      <div className='p-4 border border-neutral-200 dark:border-neutral-700 rounded-lg space-y-3'>
+      <div className='order-5 md:order-2 p-4 border border-neutral-200 dark:border-neutral-700 rounded-lg space-y-3'>
         <h3 className='text-base font-medium text-neutral-900 dark:text-neutral-100 mb-2'>{EXCHANGE_FEES[exchange].name} Fees</h3>
         <div className='grid grid-cols-3 gap-2 text-xs'>
           <div>
@@ -145,20 +145,22 @@ const ResultsPanel = ({
       </div>
 
       {/* Position Sizing */}
-      <PositionSizing
-        calculationMode={calculationMode}
-        setCalculationMode={setCalculationMode}
-        useStopLoss={useStopLoss}
-        positionSizeUSDTInput={positionSizeUSDTInput}
-        positionSizeUSDT={positionSizeUSDT}
-        handlePositionSizeChange={handlePositionSizeChange}
-        riskPercentInput={riskPercentInput}
-        riskPercent={riskPercent}
-        handleRiskPercentChange={handleRiskPercentChange}
-      />
+      <div className='order-1 md:order-3'>
+        <PositionSizing
+          calculationMode={calculationMode}
+          setCalculationMode={setCalculationMode}
+          useStopLoss={useStopLoss}
+          positionSizeUSDTInput={positionSizeUSDTInput}
+          positionSizeUSDT={positionSizeUSDT}
+          handlePositionSizeChange={handlePositionSizeChange}
+          riskPercentInput={riskPercentInput}
+          riskPercent={riskPercent}
+          handleRiskPercentChange={handleRiskPercentChange}
+        />
+      </div>
 
       {/* Profit Scenarios */}
-      <div className='p-4 border border-neutral-200 dark:border-neutral-700 rounded-lg space-y-3'>
+      <div className='order-2 md:order-4 p-4 border border-neutral-200 dark:border-neutral-700 rounded-lg space-y-3'>
         <h3 className='text-base font-medium text-neutral-900 dark:text-neutral-100 mb-2'>Profit Scenarios</h3>
         {takeProfits.filter((tp) => tp.enabled && tp.price !== null).length > 0 ? (
           takeProfits
@@ -237,7 +239,7 @@ const ResultsPanel = ({
       </div>
 
       {/* Loss Scenario / Protection */}
-      <div className='p-4 border border-neutral-200 dark:border-neutral-700 rounded-lg space-y-3'>
+      <div className='order-3 md:order-5 p-4 border border-neutral-200 dark:border-neutral-700 rounded-lg space-y-3'>
         {useStopLoss ? (
           <>
             <h3 className='text-base font-medium text-neutral-900 dark:text-neutral-100 mb-2'>Loss Scenario</h3>
@@ -291,7 +293,7 @@ const ResultsPanel = ({
 
       {/* Trailing Stop Loss Scenario */}
       {useTrailingStop && trailingStopTriggerPrice !== null && (
-        <div className='p-4 border border-neutral-200 dark:border-neutral-700 rounded-lg space-y-3'>
+        <div className='order-7 md:order-6 p-4 border border-neutral-200 dark:border-neutral-700 rounded-lg space-y-3'>
           <h3 className='text-base font-medium text-neutral-900 dark:text-neutral-100 mb-2'>Trailing Stop Scenario</h3>
 
           <div className='p-2 border-l-4 border-l-blue-500 border-t border-r border-b border-neutral-200 dark:border-neutral-700 rounded-md bg-blue-50/30 dark:bg-blue-900/10'>
@@ -376,7 +378,7 @@ const ResultsPanel = ({
       )}
 
       {/* Liquidation Analysis */}
-      <div className='p-4 border border-neutral-200 dark:border-neutral-700 rounded-lg space-y-3'>
+      <div className='order-6 md:order-7 p-4 border border-neutral-200 dark:border-neutral-700 rounded-lg space-y-3'>
         <h2 className='text-base font-medium text-neutral-900 dark:text-neutral-100 mb-2'>Liquidation Analysis</h2>
         <div className='grid grid-cols-2 gap-3'>
           <div>
